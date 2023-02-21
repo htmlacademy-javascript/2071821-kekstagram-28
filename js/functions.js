@@ -8,22 +8,24 @@ function verifyLength(string, referenceLenth) {
 }
 
 verifyLength('Good morning', 10);
-/*
+
 function isPalindrome(string) {
-  let i = 0;
-  while (i < string.length / 2) {
-    if(string[i] === string[string.length - (i + 1)]){
-      i++;
-      console.log(i);
+  const stringToCheck = string.toLowerCase().replaceAll(' ', '');
+  let checkOfLetter;
+  for (let i = 0; i < string.length / 2; i++) {
+    checkOfLetter = (stringToCheck.at(i) === stringToCheck.at(stringToCheck.length - i - 1));
+    if (checkOfLetter === false){
+      console.log('no');
+      break;
     }
-    console.log('not');
-    break;
+    console.log('yes');
   }
-  console.log('palindrome');
+
+  return checkOfLetter;
 }
 
-isPalindrome('abracadabra');
-*/
+isPalindrome('abrAcad carba ');
+
 
 function getNumber(string) {
   let number = '';
@@ -37,3 +39,9 @@ function getNumber(string) {
   return parseInt(number, 10);
 }
 console.log(getNumber(2023));
+
+function addSymbols(string, minLength, aditionalString) {
+  if(string.length > minLength){
+    return(string);
+  }
+}
