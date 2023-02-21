@@ -40,8 +40,21 @@ function getNumber(string) {
 }
 console.log(getNumber(2023));
 
-function addSymbols(string, minLength, aditionalString) {
-  if(string.length > minLength){
-    return(string);
+function addSymbols(string, minLength, extention) {
+  let result = string;
+  while (result.length < minLength) {
+    const newResultLength = result.length + extention.length;
+    let newExtention;
+    if (newResultLength <= minLength){
+      newExtention = extention;
+    }
+    else {
+      newExtention = extention.slice(0, minLength -newResultLength);
+    }
+    result = newExtention + result;
   }
+  console.log(result);
+  return result;
 }
+
+addSymbols('q', 4, 'we');
