@@ -11,7 +11,7 @@
 const verifyLength = (string, referenceLenth) =>
   string.length <= referenceLenth;
 
-// verifyLength('Good morning', 10);
+verifyLength('Good morning', 10);
 
 const isPalindrome = (string) => {
   const stringToCheck = string.toLowerCase().replaceAll(' ', '');
@@ -25,12 +25,12 @@ const isPalindrome = (string) => {
   return checkOfLetter;
 };
 
-//isPalindrome('abrAcad carba ');
+isPalindrome('abrAcad carba ');
 
 
 const getNumber = (string) => {
   let number = '';
-  string = string + '';
+  string += '';
   for(let i = 0; i < string.length; i++){
     const character = parseInt(string[i], 10);
     if (!isNaN(character)) {
@@ -40,7 +40,7 @@ const getNumber = (string) => {
   return parseInt(number, 10);
 };
 
-//console.log(getNumber(2023));
+getNumber(2023);
 
 const addSymbols = (string, minLength, extention) => {
   let result = string;
@@ -57,4 +57,4 @@ const addSymbols = (string, minLength, extention) => {
   return result;
 };
 
-//addSymbols('q', 4, 'we');
+addSymbols('q', 4, 'we');
