@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Ольга Фабрициус](https://up.htmlacademy.ru/javascript/28/user/2071821).
-* Наставник: [Андрей Ефимов](https://htmlacademy.ru/profile/id367335).
+* Наставник: [Андрей Ефимов](https://up.htmlacademy.ru/javascript/28/user/367335).
 
 ---
 
