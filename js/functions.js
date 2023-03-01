@@ -7,7 +7,7 @@ const isPalindrome = (string) => {
   const stringToCheck = string.toLowerCase().replaceAll(' ', '');
   const lastIndex = stringToCheck.length - 1;
   for (let i = 0; i < stringToCheck.length / 2; i++) {
-    if (stringToCheck[i] !== stringToCheck[lastIndex - i]){
+    if (stringToCheck[i] !== stringToCheck[lastIndex - i]) {
       return false;
     }
   }
@@ -36,7 +36,7 @@ const addSymbols = (string, minLength, extention) => {
   while (result.length < minLength) {
     const newResultLength = result.length + extention.length;
     let newExtention;
-    if (newResultLength <= minLength){
+    if (newResultLength <= minLength) {
       newExtention = extention;
     } else {
       newExtention = extention.slice(0, minLength - newResultLength);
