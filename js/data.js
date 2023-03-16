@@ -1,6 +1,5 @@
 import {
-  generatePhotoId,
-  generateUrlId,
+  createIdGenerator,
   getRandomInteger,
   createRandomIdFromRangeGenerator,
   getRandomArrayElement,
@@ -58,6 +57,7 @@ const COMMENTS = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
+
 // Функция, создающая текст комментария:
 const createMessage = () =>
   Array.from({ length: getRandomInteger(1, 2) }, () =>
@@ -78,6 +78,8 @@ const createCommentObject = () => {
 createCommentObject();
 
 // Функция, создающая объект фото:
+const generatePhotoId = createIdGenerator();
+const generateUrlId = createIdGenerator();
 
 const createPhotoObject = () => {
   const likesAmount = createRandomIdFromRangeGenerator(LIKES_MIN, LIKES_MAX);
@@ -88,14 +90,13 @@ const createPhotoObject = () => {
     likes: likesAmount(),
     coments: Array.from(
       { length: getRandomInteger(0, NUMBER_OF_COMMENTS) },
-      createCommentObject
-    ),
+      createCommentObject),
   };
 };
 createPhotoObject();
 
-const createPhotos = () =>
-  Array.from({ length: NUMBER_OF_PHOTOS }, createPhotoObject);
+const createPhotos = (length = NUMBER_OF_PHOTOS) =>
+  Array.from({ length }, createPhotoObject);
 createPhotos();
 
 export { createPhotos };
