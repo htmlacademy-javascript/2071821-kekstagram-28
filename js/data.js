@@ -57,7 +57,6 @@ const COMMENTS = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-
 // Функция, создающая текст комментария:
 const createMessage = () =>
   Array.from({ length: getRandomInteger(1, 2) }, () =>
@@ -75,17 +74,15 @@ const createCommentObject = () => {
   };
 };
 
-createCommentObject();
-
 // Функция, создающая объект фото:
 const generatePhotoId = createIdGenerator();
-const generateUrlId = createIdGenerator();
 
 const createPhotoObject = () => {
   const likesAmount = createRandomIdFromRangeGenerator(LIKES_MIN, LIKES_MAX);
+  const photoId = generatePhotoId();
   return {
-    id: generatePhotoId(),
-    url: `photos/${generateUrlId()}.jpg`,
+    id: photoId,
+    url: `photos/${photoId}.jpg`,
     description: getRandomArrayElement(PHOTO_DESCRIPTIONS),
     likes: likesAmount(),
     coments: Array.from(
@@ -93,10 +90,8 @@ const createPhotoObject = () => {
       createCommentObject),
   };
 };
-createPhotoObject();
 
 const createPhotos = (length = NUMBER_OF_PHOTOS) =>
   Array.from({ length }, createPhotoObject);
-createPhotos();
 
 export { createPhotos };
