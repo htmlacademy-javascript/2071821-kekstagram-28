@@ -1,10 +1,9 @@
 // Генератор уникальных айди (порядковые числа, начиная с)
-const createIdGenerator = (start) => () => {
+const createIdGenerator = (start = 0) => () => {
   start += 1;
   return start;
 };
-const generatePhotoId = createIdGenerator(0);
-const generateUrlId = createIdGenerator(0);
+
 
 // Ф-ция, кот. генерирует случайное положит число из диапазона
 
@@ -36,8 +35,7 @@ const getRandomArrayElement = (elements) =>
   elements[getRandomInteger(0, elements.length - 1)];
 
 export {
-  generatePhotoId,
-  generateUrlId,
+  createIdGenerator,
   getRandomInteger,
   createRandomIdFromRangeGenerator,
   getRandomArrayElement,

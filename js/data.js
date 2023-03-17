@@ -1,6 +1,5 @@
 import {
-  generatePhotoId,
-  generateUrlId,
+  createIdGenerator,
   getRandomInteger,
   createRandomIdFromRangeGenerator,
   getRandomArrayElement,
@@ -75,27 +74,24 @@ const createCommentObject = () => {
   };
 };
 
-createCommentObject();
-
 // Функция, создающая объект фото:
+const generatePhotoId = createIdGenerator();
 
 const createPhotoObject = () => {
   const likesAmount = createRandomIdFromRangeGenerator(LIKES_MIN, LIKES_MAX);
+  const photoId = generatePhotoId();
   return {
-    id: generatePhotoId(),
-    url: `photos/${generateUrlId()}.jpg`,
+    id: photoId,
+    url: `photos/${photoId}.jpg`,
     description: getRandomArrayElement(PHOTO_DESCRIPTIONS),
     likes: likesAmount(),
     coments: Array.from(
       { length: getRandomInteger(0, NUMBER_OF_COMMENTS) },
-      createCommentObject
-    ),
+      createCommentObject),
   };
 };
-createPhotoObject();
 
-const createPhotos = () =>
-  Array.from({ length: NUMBER_OF_PHOTOS }, createPhotoObject);
-createPhotos();
+const createPhotos = (length = NUMBER_OF_PHOTOS) =>
+  Array.from({ length }, createPhotoObject);
 
 export { createPhotos };
