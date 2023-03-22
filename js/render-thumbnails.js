@@ -17,9 +17,9 @@ const createThumbnail = (photo) => {
 };
 
 // Функция, рисующая миниатюры на основе массива данных
-const renderThumbnails = (thumbnailsAray) => {
+const renderThumbnails = (thumbnails) => {
   const picturesFragment = document.createDocumentFragment();
-  thumbnailsAray.forEach((photo) => {
+  thumbnails.forEach((photo) => {
     const picture = createThumbnail(photo);
     picturesFragment.append(picture);
   });

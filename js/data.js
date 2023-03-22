@@ -79,10 +79,10 @@ const generatePhotoId = createIdGenerator();
 
 const createPhotoObject = () => {
   const likesAmount = createRandomIdFromRangeGenerator(LIKES_MIN, LIKES_MAX);
-  const photoId = generatePhotoId();
+  const id = generatePhotoId();
   return {
-    id: photoId,
-    url: `photos/${photoId}.jpg`,
+    id: id,
+    url: `photos/${id}.jpg`,
     description: getRandomArrayElement(PHOTO_DESCRIPTIONS),
     likes: likesAmount(),
     coments: Array.from(
