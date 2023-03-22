@@ -11,6 +11,7 @@ const createThumbnail = (photo) => {
   thumbnail.querySelector('.picture__img').alt = photo.description;
   thumbnail.querySelector('.picture__likes').textContent = photo.likes;
   thumbnail.querySelector('.picture__comments').textContent = photo.comments;
+  thumbnail.dataset.thumbnailId = photo.id;
 
   return thumbnail;
 };
@@ -26,4 +27,4 @@ const renderThumbnails = (thumbnailsAray) => {
 
 };
 
-export {renderThumbnails};
+export { renderThumbnails };
