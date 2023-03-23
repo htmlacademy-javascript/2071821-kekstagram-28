@@ -1,4 +1,4 @@
-import { openBigPicture } from './big-photo.js';
+/*import { openBigPicture } from './big-photo.js';
 import { renderThumbnails } from './render-thumbnails.js';
 
 const container = document.querySelector('.pictures');
@@ -20,4 +20,4 @@ const renderFullscreenPhoto = (pictures) => {
 
 };
 
-export { renderFullscreenPhoto };
+export { renderFullscreenPhoto };*/

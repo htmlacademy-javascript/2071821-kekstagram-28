@@ -1,5 +1,5 @@
 import { createPhotos } from './data.js';
-
-import { renderFullscreenPhoto } from './gallery.js';
-
-renderFullscreenPhoto(createPhotos());
+import { renderThumbnails } from './render-thumbnails.js';
+//import { openBigPicture } from './big-photo.js';
+renderThumbnails(createPhotos());
+//openBigPicture();

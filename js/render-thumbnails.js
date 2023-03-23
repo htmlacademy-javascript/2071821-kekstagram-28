@@ -1,3 +1,5 @@
+import { openBigPicture } from './big-photo.js';
+
 // Находим контейнер для вставки изображений
 const picturesContainer = document.querySelector('.pictures');
 
@@ -11,8 +13,7 @@ const createThumbnail = (photo) => {
   thumbnail.querySelector('.picture__img').alt = photo.description;
   thumbnail.querySelector('.picture__likes').textContent = photo.likes;
   thumbnail.querySelector('.picture__comments').textContent = photo.comments;
-  thumbnail.dataset.thumbnailId = photo.id;
-
+  // thumbnail.dataset.thumbnailId = photo.id;
   return thumbnail;
 };
 
@@ -21,6 +22,7 @@ const renderThumbnails = (thumbnails) => {
   const picturesFragment = document.createDocumentFragment();
   thumbnails.forEach((photo) => {
     const picture = createThumbnail(photo);
+    picture.addEventListener('click', () => openBigPicture(photo));
     picturesFragment.append(picture);
   });
   picturesContainer.appendChild(picturesFragment);
