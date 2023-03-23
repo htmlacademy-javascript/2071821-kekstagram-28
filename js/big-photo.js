@@ -33,7 +33,6 @@ const renderFullPhoto = (thumbnail) => {
   renderComments(thumbnail.coments);
 };
 
-
 // Закрывает по escape
 const onBigPictureEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -41,17 +40,18 @@ const onBigPictureEscKeydown = (evt) => {
     closeBigPicture();
   }
 };
+
+// Закрывает
+function closeBigPicture () {
+  bigPicture.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onBigPictureEscKeydown);
+}
+
 // Закрывает по крестику
 closeBigPictureButton.addEventListener('click', () => {
   closeBigPicture();
 });
-
-// Закрывает
-const closeBigPicture = () => {
-  bigPicture.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onBigPictureEscKeydown);
-};
 
 // Открывает большое фото
 const openBigPicture = (thumbnail) => {
