@@ -9,7 +9,7 @@ const NUMBER_OF_PHOTOS = 25;
 const NUMBER_OF_AVATARS = 6;
 const LIKES_MIN = 15;
 const LIKES_MAX = 200;
-const NUMBER_OF_COMMENTS = 3;
+const NUMBER_OF_COMMENTS = 30;
 const PHOTO_DESCRIPTIONS = [
   'Жизнь прекрасна!',
   'Идеальный завтрак',
@@ -79,10 +79,10 @@ const generatePhotoId = createIdGenerator();
 
 const createPhotoObject = () => {
   const likesAmount = createRandomIdFromRangeGenerator(LIKES_MIN, LIKES_MAX);
-  const photoId = generatePhotoId();
+  const id = generatePhotoId();
   return {
-    id: photoId,
-    url: `photos/${photoId}.jpg`,
+    id: id,
+    url: `photos/${id}.jpg`,
     description: getRandomArrayElement(PHOTO_DESCRIPTIONS),
     likes: likesAmount(),
     coments: Array.from(
