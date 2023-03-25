@@ -7,8 +7,11 @@ const commentCount = document.querySelector('.social__comment-count');
 const commentTemplate = document.querySelector('.social__comment');
 const commentsContainer = document.querySelector('.social__comments');
 const COMMENTS_PORTION = 5;
+let currentComments = [];
+let start = 0;
+
 // Создает комментарии
-const renderComments = (comments) => {
+const createCommentsFragment = (comments) => {
   const commentsFragment = document.createDocumentFragment();
 
   comments.forEach((comment) => {
@@ -26,12 +29,22 @@ const renderComments = (comments) => {
 };
 
 // Отрисовывает порцию коментариев
-const renderCommentsPortion = (comments) => {
-  const newComments = comments.slice(commentsContainer.children.length,
-    commentsContainer.children.length + COMMENTS_PORTION);
-  const commentsPortion = renderComments(newComments);
+const renderCommentsPortion = () => {
+  const limit = start + COMMENTS_PORTION;
+  if (currentComments.length <= limit) {
+    commentsLoader.classList.add('hidden');
+
+  } else {
+    commentsLoader.classList.remove('hidden');
+
+  }
+  commentCount.textContent = `${Math.min(limit, currentComments.length)} из ${currentComments.length}`;
+
+  const newComments = currentComments.slice(start, limit);
+  const commentsPortion = createCommentsFragment(newComments);
   commentsContainer.appendChild(commentsPortion);
 };
+
 
 // Отрисовывает фото
 const renderFullPhoto = (thumbnail) => {
@@ -39,8 +52,8 @@ const renderFullPhoto = (thumbnail) => {
   bigPicture.querySelector('.likes-count').textContent = thumbnail.likes;
   bigPicture.querySelector('.social__caption').textContent = thumbnail.description;
   bigPicture.querySelector('.big-picture__img img').alt = thumbnail.description;
-  commentsContainer.innerHTML = '';
-  renderCommentsPortion(thumbnail.coments);
+  // commentsContainer.innerHTML = '';
+  renderCommentsPortion(thumbnail.comments);
 };
 
 // Закрывает по escape
@@ -56,6 +69,7 @@ function closeBigPicture () {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onBigPictureEscKeydown);
+  commentsLoader.removeEventListener('click', onCommentsLoaderClick);
 }
 
 // Закрывает по крестику
@@ -63,7 +77,10 @@ closeBigPictureButton.addEventListener('click', () => {
   closeBigPicture();
 });
 
-const onCommentsLoaderClick = () => renderCommentsPortion();
+function onCommentsLoaderClick () {
+  start += COMMENTS_PORTION;
+  renderCommentsPortion();
+}
 
 
 // Открывает большое фото
@@ -71,9 +88,18 @@ const openBigPicture = (thumbnail) => {
   bigPicture.classList.remove('hidden');
   document.addEventListener('keydown', onBigPictureEscKeydown);
   document.body.classList.add('modal-open');
-  commentsLoader.addEventListener('click', onCommentsLoaderClick);
-  commentCount.classList.add('hidden');
+
   renderFullPhoto(thumbnail);
+
+  commentsContainer.innerHTML = '';
+  currentComments = thumbnail.comments;
+  start = 0;
+  renderCommentsPortion();
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
+/* commentsContainer.innerHTML = '';
+  currentComments = thumbnail.comments;
+  console.log(currentComments);
+  renderCommentsPortion();*/
 };
 
 export { openBigPicture };
