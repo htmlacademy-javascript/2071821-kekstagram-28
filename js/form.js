@@ -1,11 +1,10 @@
 import { isEscapeKey } from './utils.js';
-
-const uploadImgInput = document.querySelector('#upload-file');
-const overlay = document.querySelector('.img-upload__overlay');
-const cancelButton = document.querySelector('#upload-cancel');
 const form = document.querySelector('.img-upload__form');
-const hashtagInput = document.querySelector('.text__hashtags');
-const commentTextarea = document.querySelector('.text__description');
+const uploadImgInput = form.querySelector('#upload-file');
+const overlay = form.querySelector('.img-upload__overlay');
+const cancelButton = overlay.querySelector('#upload-cancel');
+const hashtagInput = overlay.querySelector('.text__hashtags');
+const commentTextarea = overlay.querySelector('.text__description');
 
 const HASHTAGS_MAXCOUNT = 5;
 const COMMENT_MAXLENGTH = 140;
@@ -28,18 +27,11 @@ const pristine = new Pristine(form, {
 
 // Валидация тэгов
 
-const getHashtags = (value) => {
-  const tags = value.trim().split(/\s+/);
-  return tags;
-};
+const getHashtags = (value) => value.trim().split(/\s+/);
 
-const validateSymbols = (value) => {
-  getHashtags(value).every((tag) => VALID_HASHTAG_STRING.test(tag));
-};
+const validateSymbols = (value) => !value || getHashtags(value).every((tag) => VALID_HASHTAG_STRING.test(tag));
 
-const validateLength = (value) => {
-  getHashtags(value).every((tag) => tag.length <= HASHTAG_MAXLENGTH);
-};
+const validateLength = (value) => !value || getHashtags(value).every((tag) => tag.length <= HASHTAG_MAXLENGTH);
 
 const validateCount = (value) =>
   getHashtags(value).length <= HASHTAGS_MAXCOUNT;
@@ -78,7 +70,7 @@ const onEscKeydown = (evt) => {
 
 
 const showEditForm = () => {
-  overlay.classList.remove('visually-hidden');
+  overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onEscKeydown);
 };
@@ -88,7 +80,7 @@ const showEditForm = () => {
 function closeEditForm () {
   form.reset();
   pristine.reset();
-  overlay.classList.add('visually-hidden');
+  overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscKeydown);
 }
