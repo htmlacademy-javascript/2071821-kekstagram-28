@@ -96,10 +96,6 @@ const openBigPicture = (thumbnail) => {
   start = 0;
   renderCommentsPortion();
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
-/* commentsContainer.innerHTML = '';
-  currentComments = thumbnail.comments;
-  console.log(currentComments);
-  renderCommentsPortion();*/
 };
 
 export { openBigPicture };
