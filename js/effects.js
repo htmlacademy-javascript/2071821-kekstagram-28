@@ -67,7 +67,7 @@ const EFFECTS_DATA = [
 
 let chosenEffect = DEFAULT_EFFECT;
 
-noUiSlider.create(effectLevelSlider,{
+noUiSlider.create(effectLevelSlider, {
   range: {
     min: MIN_SLIDER_RANGE,
     max: MAX_SLIDER_RANGE,
@@ -81,12 +81,11 @@ effectLevelContainer.classList.add('hidden');
 const isDefault = () => chosenEffect === DEFAULT_EFFECT;
 
 const updateSliderVisibility = () => {
-  console.log(chosenEffect);
   if (isDefault()) {
     effectLevelContainer.classList.add('hidden');
+  } else {
+    effectLevelContainer.classList.remove('hidden');
   }
-  effectLevelContainer.classList.remove('hidden');
-
 };
 
 const updateSlider = () => {
@@ -109,7 +108,6 @@ const onEffectButtonChange = (evt) => {
   chosenEffect = EFFECTS_DATA.find((effect) => effect.name === evt.target.value);
   imgPreview.className = `effects__preview--${chosenEffect.name}`;
   updateSlider();
-  console.log(imgPreview.style.filter);
 };
 
 const onSliderUpdate = () => {
@@ -125,7 +123,6 @@ const resetEffects = () => {
   chosenEffect = DEFAULT_EFFECT;
   updateSlider();
 };
-
 
 effectsContainer.addEventListener('change', onEffectButtonChange);
 effectLevelSlider.noUiSlider.on('update', onSliderUpdate);
