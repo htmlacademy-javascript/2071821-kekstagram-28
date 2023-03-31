@@ -1,4 +1,7 @@
 import { isEscapeKey } from './utils.js';
+import { scaleReset } from './scale.js';
+import { resetEffects } from './effects.js';
+
 const form = document.querySelector('.img-upload__form');
 const uploadImgInput = form.querySelector('#upload-file');
 const overlay = form.querySelector('.img-upload__overlay');
@@ -80,6 +83,8 @@ const showEditForm = () => {
 function closeEditForm () {
   form.reset();
   pristine.reset();
+  scaleReset();
+  resetEffects();
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscKeydown);

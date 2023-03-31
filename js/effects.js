@@ -1,5 +1,5 @@
 //const effectButtons = document.querySelectorAll('.effects__radio');
-const imagePreview = document.querySelector('.img-upload__preview img');
+const imgPreview = document.querySelector('.img-upload__preview img');
 const effectLevelInput = document.querySelector('.effect-level__value');
 const effectLevelContainer = document.querySelector('.img-upload__effect-level');
 const effectLevelSlider = document.querySelector('.effect-level__slider');
@@ -7,8 +7,18 @@ const effectsContainer = document.querySelector('.effects');
 const MIN_SLIDER_RANGE = 1;
 const MAX_SLIDER_RANGE = 100;
 
-const EFFECTS__DATA = [
-  { name: 'chrome',
+const DEFAULT_EFFECT = {
+  name: 'none',
+  filter: 'none',
+  min: 0,
+  max: 100,
+  step: 1,
+  unit: ''
+};
+
+const EFFECTS_DATA = [
+  {
+    name: 'chrome',
     filter: 'grayscale',
     min: 0,
     max: 1,
@@ -16,7 +26,8 @@ const EFFECTS__DATA = [
     unit: ''
   },
 
-  { name: 'sepia',
+  {
+    name: 'sepia',
     filter: 'sepia',
     min: 0,
     max: 1,
@@ -24,7 +35,8 @@ const EFFECTS__DATA = [
     unit: ''
   },
 
-  { name: 'marvin',
+  {
+    name: 'marvin',
     filter: 'invert',
     min: 0,
     max: 100,
@@ -32,7 +44,8 @@ const EFFECTS__DATA = [
     unit: '%'
   },
 
-  { name: 'phobos',
+  {
+    name: 'phobos',
     filter: 'blur',
     min: 0,
     max: 3,
@@ -40,7 +53,8 @@ const EFFECTS__DATA = [
     unit: 'px'
   },
 
-  { name: 'heat',
+  {
+    name: 'heat',
     filter: 'brightness',
     min: 1,
     max: 3,
@@ -48,15 +62,9 @@ const EFFECTS__DATA = [
     unit: ''
   },
 
-  { name: 'none',
-    filter: 'none',
-    min: 0,
-    max: 100,
-    step: 1,
-    unit: ''
-  }
+  DEFAULT_EFFECT
 ];
-const DEFAULT_EFFECT = EFFECTS__DATA.slice(-1);
+
 let chosenEffect = DEFAULT_EFFECT;
 
 noUiSlider.create(effectLevelSlider,{
@@ -68,14 +76,17 @@ noUiSlider.create(effectLevelSlider,{
   step: 1,
   connect: 'lower'
 });
+effectLevelContainer.classList.add('hidden');
 
+const isDefault = () => chosenEffect === DEFAULT_EFFECT;
 
-const isDefault = () => {
-  if (chosenEffect === DEFAULT_EFFECT) {
+const updateSliderVisibility = () => {
+  console.log(chosenEffect);
+  if (isDefault()) {
     effectLevelContainer.classList.add('hidden');
-  } else {
-    effectLevelContainer.classList.remove('hidden');
   }
+  effectLevelContainer.classList.remove('hidden');
+
 };
 
 const updateSlider = () => {
@@ -87,7 +98,7 @@ const updateSlider = () => {
     step: chosenEffect.step,
     start: chosenEffect.max,
   });
-  isDefault();
+  updateSliderVisibility();
 };
 
 // Обработчик смены эффекта
@@ -95,22 +106,29 @@ const onEffectButtonChange = (evt) => {
   if (!evt.target.matches('input[type="radio"]')) {
     return;
   }
-  chosenEffect = EFFECTS__DATA.find((effect) => effect.name === evt.target.value);
-  imagePreview.className = `effects__preview--${chosenEffect.name}`;
+  chosenEffect = EFFECTS_DATA.find((effect) => effect.name === evt.target.value);
+  imgPreview.className = `effects__preview--${chosenEffect.name}`;
   updateSlider();
+  console.log(imgPreview.style.filter);
 };
 
 const onSliderUpdate = () => {
+  if (isDefault()) {
+    imgPreview.style.filter = 'none';
+  }
   effectLevelInput.value = effectLevelSlider.noUiSlider.get();
-  imagePreview.style.filter = `${chosenEffect.filter}(${effectLevelInput.value}${chosenEffect.unit})`;
-};
+  imgPreview.style.filter = `${chosenEffect.filter}(${effectLevelInput.value}${chosenEffect.unit})`;
 
-effectsContainer.addEventListener('change', onEffectButtonChange);
-effectLevelSlider.noUiSlider.on('update', onSliderUpdate);
+};
 
 const resetEffects = () => {
   chosenEffect = DEFAULT_EFFECT;
   updateSlider();
 };
+
+
+effectsContainer.addEventListener('change', onEffectButtonChange);
+effectLevelSlider.noUiSlider.on('update', onSliderUpdate);
+
 
 export { resetEffects };
