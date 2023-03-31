@@ -1,7 +1,8 @@
-//const effectButtons = document.querySelectorAll('.effects__radio');
 const imgPreview = document.querySelector('.img-upload__preview img');
 const effectLevelInput = document.querySelector('.effect-level__value');
-const effectLevelContainer = document.querySelector('.img-upload__effect-level');
+const effectLevelContainer = document.querySelector(
+  '.img-upload__effect-level'
+);
 const effectLevelSlider = document.querySelector('.effect-level__slider');
 const effectsContainer = document.querySelector('.effects');
 const MIN_SLIDER_RANGE = 1;
@@ -13,7 +14,7 @@ const DEFAULT_EFFECT = {
   min: 0,
   max: 100,
   step: 1,
-  unit: ''
+  unit: '',
 };
 
 const EFFECTS_DATA = [
@@ -23,7 +24,7 @@ const EFFECTS_DATA = [
     min: 0,
     max: 1,
     step: 0.1,
-    unit: ''
+    unit: '',
   },
 
   {
@@ -32,7 +33,7 @@ const EFFECTS_DATA = [
     min: 0,
     max: 1,
     step: 0.1,
-    unit: ''
+    unit: '',
   },
 
   {
@@ -41,7 +42,7 @@ const EFFECTS_DATA = [
     min: 0,
     max: 100,
     step: 1,
-    unit: '%'
+    unit: '%',
   },
 
   {
@@ -50,7 +51,7 @@ const EFFECTS_DATA = [
     min: 0,
     max: 3,
     step: 0.1,
-    unit: 'px'
+    unit: 'px',
   },
 
   {
@@ -59,10 +60,10 @@ const EFFECTS_DATA = [
     min: 1,
     max: 3,
     step: 0.1,
-    unit: ''
+    unit: '',
   },
 
-  DEFAULT_EFFECT
+  DEFAULT_EFFECT,
 ];
 
 let chosenEffect = DEFAULT_EFFECT;
@@ -74,7 +75,7 @@ noUiSlider.create(effectLevelSlider, {
   },
   start: MAX_SLIDER_RANGE,
   step: 1,
-  connect: 'lower'
+  connect: 'lower',
 });
 effectLevelContainer.classList.add('hidden');
 
@@ -105,7 +106,9 @@ const onEffectButtonChange = (evt) => {
   if (!evt.target.matches('input[type="radio"]')) {
     return;
   }
-  chosenEffect = EFFECTS_DATA.find((effect) => effect.name === evt.target.value);
+  chosenEffect = EFFECTS_DATA.find(
+    (effect) => effect.name === evt.target.value
+  );
   imgPreview.className = `effects__preview--${chosenEffect.name}`;
   updateSlider();
 };
@@ -116,7 +119,6 @@ const onSliderUpdate = () => {
   }
   effectLevelInput.value = effectLevelSlider.noUiSlider.get();
   imgPreview.style.filter = `${chosenEffect.filter}(${effectLevelInput.value}${chosenEffect.unit})`;
-
 };
 
 const resetEffects = () => {
@@ -126,6 +128,5 @@ const resetEffects = () => {
 
 effectsContainer.addEventListener('change', onEffectButtonChange);
 effectLevelSlider.noUiSlider.on('update', onSliderUpdate);
-
 
 export { resetEffects };
