@@ -1,7 +1,10 @@
-import { createPhotos } from './data.js';
+//import { createPhotos } from './data.js';
 import { renderThumbnails } from './render-thumbnails.js';
-import './form.js';
-import './scale.js';
-import './effects.js';
+import { initForm } from './form.js';
+import { getData } from './api.js';
 
-renderThumbnails(createPhotos());
+getData((pictures) => {
+  renderThumbnails(pictures);
+});
+
+initForm();
