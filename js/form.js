@@ -1,6 +1,8 @@
 import { isEscapeKey } from './utils.js';
-import { scaleReset } from './scale.js';
-import { resetEffects } from './effects.js';
+import { initScale, scaleReset } from './scale.js';
+import { initEffectsSlider, resetEffects } from './effects.js';
+import { sendData } from './api.js';
+import { showFailMessage, showSuccessMessage } from './messages.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadImgInput = form.querySelector('#upload-file');
@@ -8,6 +10,8 @@ const overlay = form.querySelector('.img-upload__overlay');
 const cancelButton = overlay.querySelector('#upload-cancel');
 const hashtagInput = overlay.querySelector('.text__hashtags');
 const commentTextarea = overlay.querySelector('.text__description');
+const submitButton = overlay.querySelector('.img-upload__submit');
+
 
 const HASHTAGS_MAXCOUNT = 5;
 const COMMENT_MAXLENGTH = 140;
@@ -27,6 +31,16 @@ const pristine = new Pristine(form, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__error-text'
 });
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Публикую...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
 
 // Валидация тэгов
 
@@ -66,6 +80,9 @@ const isFieldFocused = () =>
 // Закрывает по escape
 const onEscKeydown = (evt) => {
   if (isEscapeKey(evt) && !isFieldFocused()) {
+    if (document.querySelector('.error')){
+      return;
+    }
     evt.preventDefault();
     closeEditForm();
   }
@@ -99,13 +116,30 @@ const onFileInputChange = () => {
   showEditForm();
 };
 
+const onSuccess = () => {
+  showSuccessMessage();
+  closeEditForm();
+  unblockSubmitButton();
+};
+
+const onFail = () => {
+  showFailMessage();
+  unblockSubmitButton();
+};
+
 const onFormSubmit = (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
-    form.submit();
+    blockSubmitButton();
+    sendData(onSuccess, onFail, new FormData(evt.target));
   }
 };
 
-uploadImgInput.addEventListener('change', onFileInputChange);
-form.addEventListener('submit', onFormSubmit);
+const initForm = () => {
+  initScale();
+  initEffectsSlider();
+  uploadImgInput.addEventListener('change', onFileInputChange);
+  form.addEventListener('submit', onFormSubmit);
+};
 
+export { initForm };

@@ -68,16 +68,6 @@ const EFFECTS_DATA = [
 
 let chosenEffect = DEFAULT_EFFECT;
 
-noUiSlider.create(effectLevelSlider, {
-  range: {
-    min: MIN_SLIDER_RANGE,
-    max: MAX_SLIDER_RANGE,
-  },
-  start: MAX_SLIDER_RANGE,
-  step: 1,
-  connect: 'lower',
-});
-effectLevelContainer.classList.add('hidden');
 
 const isDefault = () => chosenEffect === DEFAULT_EFFECT;
 
@@ -126,7 +116,22 @@ const resetEffects = () => {
   updateSlider();
 };
 
-effectsContainer.addEventListener('change', onEffectButtonChange);
-effectLevelSlider.noUiSlider.on('update', onSliderUpdate);
+const initEffectsSlider = () => {
+  noUiSlider.create(effectLevelSlider, {
+    range: {
+      min: MIN_SLIDER_RANGE,
+      max: MAX_SLIDER_RANGE,
+    },
+    start: MAX_SLIDER_RANGE,
+    step: 1,
+    connect: 'lower',
+  });
+  effectLevelContainer.classList.add('hidden');
 
-export { resetEffects };
+  effectsContainer.addEventListener('change', onEffectButtonChange);
+  effectLevelSlider.noUiSlider.on('update', onSliderUpdate);
+
+};
+
+
+export { initEffectsSlider, resetEffects };
