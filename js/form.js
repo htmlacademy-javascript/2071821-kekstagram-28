@@ -1,7 +1,8 @@
-import { isEscapeKey, showAlert } from './utils.js';
+import { isEscapeKey } from './utils.js';
 import { initScale, scaleReset } from './scale.js';
 import { initEffectsSlider, resetEffects } from './effects.js';
 import { sendData } from './api.js';
+import { showFailMessage, showSuccessMessage } from './messages.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadImgInput = form.querySelector('#upload-file');
@@ -9,7 +10,8 @@ const overlay = form.querySelector('.img-upload__overlay');
 const cancelButton = overlay.querySelector('#upload-cancel');
 const hashtagInput = overlay.querySelector('.text__hashtags');
 const commentTextarea = overlay.querySelector('.text__description');
-const submitButton = document.querySelector('img-upload__submit');
+const submitButton = document.querySelector('.img-upload__submit');
+
 
 const HASHTAGS_MAXCOUNT = 5;
 const COMMENT_MAXLENGTH = 140;
@@ -78,6 +80,9 @@ const isFieldFocused = () =>
 // Закрывает по escape
 const onEscKeydown = (evt) => {
   if (isEscapeKey(evt) && !isFieldFocused()) {
+    if (document.querySelector('.error')){
+      return;
+    }
     evt.preventDefault();
     closeEditForm();
   }
@@ -111,14 +116,13 @@ const onFileInputChange = () => {
   showEditForm();
 };
 
-
 const onSuccess = () => {
-  showAlert('Не удалось отправить форму. Попробуйте еще раз');
-  unblockSubmitButton();
+  showSuccessMessage();
+  closeEditForm();
 };
 
 const onFail = () => {
-  showAlert('Не удалось отправить форму. Попробуйте еще раз');
+  showFailMessage();
   unblockSubmitButton();
 };
 
