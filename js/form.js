@@ -10,7 +10,7 @@ const overlay = form.querySelector('.img-upload__overlay');
 const cancelButton = overlay.querySelector('#upload-cancel');
 const hashtagInput = overlay.querySelector('.text__hashtags');
 const commentTextarea = overlay.querySelector('.text__description');
-const submitButton = document.querySelector('.img-upload__submit');
+const submitButton = overlay.querySelector('.img-upload__submit');
 
 
 const HASHTAGS_MAXCOUNT = 5;
@@ -119,6 +119,7 @@ const onFileInputChange = () => {
 const onSuccess = () => {
   showSuccessMessage();
   closeEditForm();
+  unblockSubmitButton();
 };
 
 const onFail = () => {
