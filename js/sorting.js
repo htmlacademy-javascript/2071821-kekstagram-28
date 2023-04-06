@@ -1,9 +1,9 @@
 import { renderThumbnails } from './render-thumbnails.js';
 import { shuffleArray } from './utils.js';
-//import { getData } from './api.js';
+import { debounce } from './utils.js';
 
 const RANDOM_COUNT = 10;
-//const DELAY = 500;
+const RENDER_DELAY = 500;
 
 const sortingBlock = document.querySelector('.img-filters');
 
@@ -29,7 +29,7 @@ const getSortedData = (data) => {
 };
 
 const setSortingButtonClick = (cb, data) => {
-  sortingBlock.addEventListener('click', (evt) => {
+  sortingBlock.addEventListener('click', debounce((evt) => {
     currentButton = evt.target;
     if (!currentButton.matches('.img-filters__button') || currentButton.matches('.img-filters__button--active')) {
       return;
@@ -37,13 +37,12 @@ const setSortingButtonClick = (cb, data) => {
     sortingBlock.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
     currentButton.classList.add('img-filters__button--active');
     renderThumbnails(cb(data));
-  });
+  }, RENDER_DELAY));
 };
 
 
 const initFilter = () => {
   showSortingBlock();
-  //sortingBlock.addEventListener('click', onSortingButtonClick);
 };
 
 export { initFilter, setSortingButtonClick, getSortedData };
