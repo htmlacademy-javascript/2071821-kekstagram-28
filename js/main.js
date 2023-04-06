@@ -2,7 +2,11 @@
 import { renderThumbnails } from './render-thumbnails.js';
 import { initForm } from './form.js';
 import { getData } from './api.js';
+import { initSorting } from './sorting.js';
 
-getData(renderThumbnails);
+getData((data) => {
+  renderThumbnails(data);
+  initSorting(data);
+});
 
 initForm();

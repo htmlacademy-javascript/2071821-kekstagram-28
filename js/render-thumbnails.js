@@ -26,7 +26,6 @@ const renderThumbnails = (thumbnails) => {
     picturesFragment.append(picture);
   });
   picturesContainer.appendChild(picturesFragment);
-
 };
 
 export { renderThumbnails };
