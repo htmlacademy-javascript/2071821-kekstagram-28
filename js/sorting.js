@@ -19,13 +19,13 @@ let currentButton = sortingBlock.querySelector('#filter-default');
 const getSortedData = (data) => {
   const picturesToRemove = document.querySelectorAll('.picture');
   picturesToRemove.forEach((element) => element.remove());
-  if (currentButton.id === 'filter-default') {
-    return data;
-  } else if (currentButton.id === 'filter-random') {
+  if (currentButton.id === 'filter-random') {
     return sortRandom(data.slice()).slice(0, RANDOM_COUNT);
-  } else if (currentButton.id === 'filter-discussed') {
+  }
+  if (currentButton.id === 'filter-discussed') {
     return data.slice().sort(sortByComments);
   }
+  return data;
 };
 
 const setSortingButtonClick = (cb, data) => {
@@ -41,9 +41,10 @@ const setSortingButtonClick = (cb, data) => {
 };
 
 
-const initFilter = () => {
+const initSorting = (pictures) => {
   showSortingBlock();
+  setSortingButtonClick(() => getSortedData(pictures));
 };
 
-export { initFilter, setSortingButtonClick, getSortedData };
+export { initSorting };
 
