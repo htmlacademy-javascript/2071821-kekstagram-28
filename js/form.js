@@ -142,4 +142,4 @@ const initForm = () => {
   form.addEventListener('submit', onFormSubmit);
 };
 
-export { initForm };
+export { initForm, closeEditForm };
