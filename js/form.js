@@ -3,6 +3,7 @@ import { initScale, scaleReset } from './scale.js';
 import { initEffectsSlider, resetEffects } from './effects.js';
 import { sendData } from './api.js';
 import { showFailMessage, showSuccessMessage } from './messages.js';
+import { handleChosePhoto } from './photo-loader.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadImgInput = form.querySelector('#upload-file');
@@ -11,6 +12,7 @@ const cancelButton = overlay.querySelector('#upload-cancel');
 const hashtagInput = overlay.querySelector('.text__hashtags');
 const commentTextarea = overlay.querySelector('.text__description');
 const submitButton = overlay.querySelector('.img-upload__submit');
+const preview = document.querySelector('.img-upload__preview img');
 
 
 const HASHTAGS_MAXCOUNT = 5;
@@ -80,7 +82,7 @@ const isFieldFocused = () =>
 // Закрывает по escape
 const onEscKeydown = (evt) => {
   if (isEscapeKey(evt) && !isFieldFocused()) {
-    if (document.querySelector('.error')){
+    if (document.querySelector('.error')) {
       return;
     }
     evt.preventDefault();
@@ -113,7 +115,9 @@ cancelButton.addEventListener('click', () => {
 });
 
 const onFileInputChange = () => {
-  showEditForm();
+  if (handleChosePhoto(uploadImgInput, preview)) {
+    showEditForm();
+  }
 };
 
 const onSuccess = () => {

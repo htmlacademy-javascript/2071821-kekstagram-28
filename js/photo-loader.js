@@ -1,25 +1,18 @@
 import { showAlert } from './utils.js';
-import { closeEditForm } from './form.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
-const fileChooser = document.querySelector('.img-upload input[type=file]');
-const preview = document.querySelector('.img-upload__preview img');
+const handleChosePhoto = (fileChooser, preview) => {
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
 
-const showUploadedImage = () => {
-  fileChooser.addEventListener('change', () => {
-    const file = fileChooser.files[0];
-    const fileName = file.name.toLowerCase();
-
-    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-
-    if (matches) {
-      preview.src = URL.createObjectURL(file);
-    } else {
-      showAlert('Невозможно загрузить файл данного формата');
-      closeEditForm();
-    }
-  });
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    preview.src = URL.createObjectURL(file);
+    return true;
+  }
+  showAlert('Невозможно загрузить файл данного формата');
+  return false;
 };
 
-export { showUploadedImage };
+export { handleChosePhoto };
