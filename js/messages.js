@@ -54,6 +54,7 @@ const showSuccessMessage = () => {
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onDocumentClick);
 };
+
 const showFailMessage = () => {
   newFailMessage = errorMessageTemplate.cloneNode(true);
   const failButton = newFailMessage.querySelector('.error__button');
@@ -62,6 +63,5 @@ const showFailMessage = () => {
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onDocumentClick);
 };
-
 
 export{ showFailMessage, showSuccessMessage };

@@ -68,7 +68,6 @@ const EFFECTS_DATA = [
 
 let chosenEffect = DEFAULT_EFFECT;
 
-
 const isDefault = () => chosenEffect === DEFAULT_EFFECT;
 
 const updateSliderVisibility = () => {
@@ -132,6 +131,5 @@ const initEffectsSlider = () => {
   effectLevelSlider.noUiSlider.on('update', onSliderUpdate);
 
 };
-
 
 export { initEffectsSlider, resetEffects };

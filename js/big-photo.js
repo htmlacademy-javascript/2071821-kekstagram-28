@@ -52,7 +52,6 @@ const renderFullPhoto = (thumbnail) => {
   bigPicture.querySelector('.likes-count').textContent = thumbnail.likes;
   bigPicture.querySelector('.social__caption').textContent = thumbnail.description;
   bigPicture.querySelector('.big-picture__img img').alt = thumbnail.description;
-  // commentsContainer.innerHTML = '';
   renderCommentsPortion(thumbnail.comments);
 };
 
@@ -88,9 +87,7 @@ const openBigPicture = (thumbnail) => {
   bigPicture.classList.remove('hidden');
   document.addEventListener('keydown', onBigPictureEscKeydown);
   document.body.classList.add('modal-open');
-
   renderFullPhoto(thumbnail);
-
   commentsContainer.innerHTML = '';
   currentComments = thumbnail.comments;
   start = 0;
