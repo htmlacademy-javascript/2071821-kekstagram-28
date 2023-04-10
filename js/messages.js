@@ -1,22 +1,27 @@
-import { isEscapeKey } from './utils.js';
+import { isEscapeKey, showAlert } from './utils.js';
 const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
 let newSuccessMessage = '';
 let newFailMessage = '';
 
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey) {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
+    if (newFailMessage) {
+      hideFailMessage();
+    }
+    hideSuccessMessage();
   }
-  if (newFailMessage) {
-    hideFailMessage();
-    return;
-  }
-  hideSuccessMessage();
 };
 
+
 const onDocumentClick = (evt) => {
-  if (evt.target === document.querySelector('.error__inner') || evt.target === document.querySelector('.success__inner')) {
+  const errorBlock = document.querySelector('.error__inner');
+  const successBlock = document.querySelector('.success__inner');
+  const errorBlockTitle = errorBlock.querySelector('.error__title');
+  const successBlockTitle = successBlock.querySelector('.success__title');
+  if (evt.target === errorBlock & evt.target === errorBlockTitle ||
+  evt.target === successBlock & evt.target === successBlockTitle) {
     return;
   }
   if (newFailMessage) {
@@ -64,4 +69,9 @@ const showFailMessage = () => {
   document.addEventListener('click', onDocumentClick);
 };
 
-export{ showFailMessage, showSuccessMessage };
+const onUploadFail = () => {
+  showAlert('Ошибка загрузки данных');
+};
+
+
+export{ showFailMessage, showSuccessMessage, onUploadFail };
