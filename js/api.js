@@ -1,3 +1,5 @@
+//import { onUploadFail } from './messages.js';
+
 const getData = (onSuccess, onFail) => {
   fetch('https://28.javascript.pages.academy/kekstagram/data')
     .then((response) => response.json())
