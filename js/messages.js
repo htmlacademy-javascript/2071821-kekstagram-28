@@ -1,77 +1,50 @@
 import { isEscapeKey, showAlert } from './utils.js';
-const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
-const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
-let newSuccessMessage = '';
-let newFailMessage = '';
 
-const onDocumentKeydown = (evt) => {
+const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
+const successMessageBlock = successMessageTemplate.cloneNode(true);
+const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
+const errorMessageBlock = errorMessageTemplate.cloneNode(true);
+
+let currentMessageBlock = null;
+
+const showMessageBlock = () => {
+  document.body.append(currentMessageBlock);
+  document.addEventListener('keydown', onDocumentKeydown);
+};
+
+const hideMessageBlock = () => {
+  currentMessageBlock.remove();
+  document.removeEventListener('keydown', onDocumentKeydown);
+};
+
+const onModalClick = (evt) => {
+  if (typeof evt.target.dataset.close !== 'undefined') {
+    hideMessageBlock();
+  }
+};
+
+function onDocumentKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    if (newFailMessage) {
-      hideFailMessage();
-    }
-    hideSuccessMessage();
+    hideMessageBlock();
   }
-};
-
-
-const onDocumentClick = (evt) => {
-  const errorBlock = document.querySelector('.error__inner');
-  const successBlock = document.querySelector('.success__inner');
-  const errorBlockTitle = errorBlock.querySelector('.error__title');
-  const successBlockTitle = successBlock.querySelector('.success__title');
-  if (evt.target === errorBlock & evt.target === errorBlockTitle ||
-  evt.target === successBlock & evt.target === successBlockTitle) {
-    return;
-  }
-  if (newFailMessage) {
-    hideFailMessage();
-    return;
-  }
-  hideSuccessMessage();
-};
-
-
-function hideSuccessMessage () {
-  newSuccessMessage.remove();
-  newSuccessMessage = '';
-  document.removeEventListener('keydown', onDocumentKeydown);
-  document.removeEventListener('click', onDocumentClick);
 }
-
-function hideFailMessage () {
-  newFailMessage.remove();
-  newFailMessage = '';
-  document.removeEventListener('keydown', onDocumentKeydown);
-  document.removeEventListener('click', onDocumentClick);
-}
-
-
-const onSuccessButtonClick = () => hideSuccessMessage();
-const onFailButtonClick = () => hideFailMessage();
-
 
 const showSuccessMessage = () => {
-  newSuccessMessage = successMessageTemplate.cloneNode(true);
-  const successButton = newSuccessMessage.querySelector('.success__button');
-  successButton.addEventListener('click', onSuccessButtonClick);
-  document.body.append(newSuccessMessage);
-  document.addEventListener('keydown', onDocumentKeydown);
-  document.addEventListener('click', onDocumentClick);
+  currentMessageBlock = successMessageBlock;
+  showMessageBlock();
 };
 
 const showFailMessage = () => {
-  newFailMessage = errorMessageTemplate.cloneNode(true);
-  const failButton = newFailMessage.querySelector('.error__button');
-  failButton.addEventListener('click', onFailButtonClick);
-  document.body.append(newFailMessage);
-  document.addEventListener('keydown', onDocumentKeydown);
-  document.addEventListener('click', onDocumentClick);
+  currentMessageBlock = errorMessageBlock;
+  showMessageBlock();
 };
+
+successMessageBlock.addEventListener('click', onModalClick);
+errorMessageBlock.addEventListener('click', onModalClick);
 
 const onUploadFail = () => {
   showAlert('Ошибка загрузки данных');
 };
 
-
-export{ showFailMessage, showSuccessMessage, onUploadFail };
+export { showFailMessage, showSuccessMessage, onUploadFail };
